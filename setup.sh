@@ -12,7 +12,6 @@ _dbg() {
 	echo "$@" >&2
 }
 
-
 _download_src() {
 	local force="$1"
 
@@ -80,8 +79,10 @@ _generate_environment() {
 	echo "_CROSS_WORKDIR=\"${WORKDIR}\"" >> "$e"
 
 	echo "_CROSS_PATH=\"$$PATH\"" >> "$e"
-	echo "export PATH=\"$$PATH:$WORKDIR/binutils-$arch\"" >> "$e"
-	echo "cross_deactivate() { export PATH=\"$${_CROSS_PATH}\"; }" >> "$e"
+	echo "_CROSS_PS1=\"$$PS1\"" >> "$e"
+	echo "export PATH=\"$WORKDIR/binutils-$arch/binutils:$WORKDIR/gdb-$arch/gdb:$$PATH\"" >> "$e"
+	echo "export PS1=\"(X) $$PS1" >> "$e"
+	echo "cross_deactivate() { export PATH=\"$${_CROSS_PATH}\"; export PS1=\"$${_CROSS_PS1}\"; }" >> "$e"
 }
 
 main() {
