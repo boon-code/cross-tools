@@ -86,10 +86,32 @@ _generate_environment() {
 }
 
 main() {
-	_download_src || exit 1
-	_extract_src || exit 1
-	_compile_all || exit 1
-	_generate_environment "$TARGET" || exit 1
+	local action="$1"
+	local build=1
+	local generate=1
+
+	case "$action" in
+	all)
+		;;
+	only-generate|generate)
+		build=0
+		generate=1
+		;;
+	*)
+		_dbg "Choose action: all|generate"
+		exit 1
+		;;
+	esac
+
+	if [ "$build" -eq 1 ]; then
+		_download_src || exit 1
+		_extract_src || exit 1
+		_compile_all || exit 1
+	fi
+
+	if [ "$generate" -eq 1 ]; then
+		_generate_environment "$TARGET" || exit 1
+	fi
 }
 
 main $@
