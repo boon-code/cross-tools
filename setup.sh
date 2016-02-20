@@ -16,14 +16,14 @@ _download_src() {
 	local force="$1"
 
 	if [ ! -e "$WORKDIR/binutils.tar.bz2" ] || [ -n "$force" ]; then
-		curl -o "$WORKDIR/binutils.tar.bz2" "http://ftp.gnu.org/gnu/binutils/binutils-$BINUTILS_VERSION.tar.bz2"
+		curl -o "$WORKDIR/binutils-${BINUTILS_VERSION}.tar.bz2" "http://ftp.gnu.org/gnu/binutils/binutils-$BINUTILS_VERSION.tar.bz2"
 		if [ $? -ne 0 ]; then
 			_dbg "Failed to download binutils to $WORKDIR"
 			return 1
 		fi
 	fi
 
-	if [ ! -e "$WORKDIR/gdb.tar.xz" ] || [ -n "$force" ]; then
+	if [ ! -e "$WORKDIR/gdb-${GDB_VERSION}.tar.xz" ] || [ -n "$force" ]; then
 		curl -o "$WORKDIR/gdb.tar.xz" "http://ftp.gnu.org/gnu/gdb/gdb-$GDB_VERSION.tar.xz"
 		if [ $? -ne 0 ]; then
 			_dbg "Failed to download gdb to $WORKDIR"
@@ -37,8 +37,8 @@ _download_src() {
 _extract_src() {
 	local _fail=0
 	pushd "$WORKDIR" || { _dbg "Can't change to directory $WORKDIR"; return 1; }
-	tar -xf "binutils.tar.bz2" || { _dbg "Failed to extract binutils: error=$?"; _fail=2; }
-	tar -xf "gdb.tar.xz" || { _dbg "Failed to extract gdb: error=$?"; _fail=2; }
+	tar -xf "binutils-${BINUTILS_VERSION}.tar.bz2" || { _dbg "Failed to extract binutils: error=$?"; _fail=2; }
+	tar -xf "gdb-${GDB_VERSION}.tar.xz" || { _dbg "Failed to extract gdb: error=$?"; _fail=2; }
 	popd
 
 	return ${_fail}
