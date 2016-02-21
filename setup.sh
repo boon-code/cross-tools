@@ -15,7 +15,7 @@ _dbg() {
 _download_src() {
 	local force="$1"
 
-	if [ ! -e "$WORKDIR/binutils.tar.bz2" ] || [ -n "$force" ]; then
+	if [ ! -e "$WORKDIR/binutils-${BINUTILS_VERSION}.tar.bz2" ] || [ -n "$force" ]; then
 		curl -o "$WORKDIR/binutils-${BINUTILS_VERSION}.tar.bz2" "http://ftp.gnu.org/gnu/binutils/binutils-$BINUTILS_VERSION.tar.bz2"
 		if [ $? -ne 0 ]; then
 			_dbg "Failed to download binutils to $WORKDIR"
@@ -24,7 +24,7 @@ _download_src() {
 	fi
 
 	if [ ! -e "$WORKDIR/gdb-${GDB_VERSION}.tar.xz" ] || [ -n "$force" ]; then
-		curl -o "$WORKDIR/gdb.tar.xz" "http://ftp.gnu.org/gnu/gdb/gdb-$GDB_VERSION.tar.xz"
+		curl -o "$WORKDIR/gdb-${GDB_VERSION}.tar.xz" "http://ftp.gnu.org/gnu/gdb/gdb-$GDB_VERSION.tar.xz"
 		if [ $? -ne 0 ]; then
 			_dbg "Failed to download gdb to $WORKDIR"
 			return 2
