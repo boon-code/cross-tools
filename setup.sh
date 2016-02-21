@@ -73,7 +73,7 @@ _compile_all() {
 
 _generate_environment() {
 	local arch="$1"
-	local e="$WORKDIR/environment"
+	local e="$WORKDIR/environment-$arch"
 	local absWorkDir="$(readlink -f "$WORKDIR")"
 
 	echo "_CROSS_GDB_VERSION=\"${GDB_VERSION}\"" > "$e"
